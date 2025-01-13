@@ -3,66 +3,53 @@
 struct node
 {
     int data;
-    struct node *left;
-    struct node *right;
+    struct node *link;
 };
-struct node *head;
-void enqueue()
+struct node *top = 0;
+void push(int x)
 {
     struct node *newnode;
-    struct node *temp;
     newnode = (struct node *)malloc(sizeof(struct node));
-    printf("Enter data");
-    scanf("%d", &newnode->data);
-    newnode->right = 0;
-    newnode->left = 0;
-    if (head == 0)
-    {
-        head = temp = newnode;
-    }
-    else
-    {
-        temp->right = newnode;
-        newnode->left = temp;
-        temp = newnode;
-    }
+    newnode->data = x;
+    newnode->link = top;
+    top = newnode;
 }
-void delete()
+void pop()
 {
     struct node *temp;
-    if (head == 0)
+    temp = top;
+    if (temp == 0)
     {
-        printf("Empty");
+        printf("Underflow");
     }
     else
     {
-        temp = head;
-        head = head->right;
-        head->left = 0;
-        printf("popped element is %d", temp->data);
+        printf("Popped element is %d", temp->data);
+        top = temp->link;
         free(temp);
     }
 }
 void display()
 {
     struct node *temp;
-    temp = head;
-    if (head == 0)
+    temp = top;
+    if (temp == 0)
     {
-        printf("Empty");
+        printf("Underflow");
     }
     else
     {
         while (temp != 0)
         {
-            printf("%d", temp->data);
-            temp = temp->right;
+            printf("%d\t", temp->data);
+            temp = temp->link;
         }
     }
 }
 int main()
 {
     int choice;
+    int value;
     printf("\nMenu:\n");
     printf("1. Push\n");
     printf("2. Pop\n");
@@ -75,10 +62,12 @@ int main()
         switch (choice)
         {
         case 1:
-            enqueue();
+            printf("Enter the data to add\n");
+            scanf("%d", &value);
+            push(value);
             break;
         case 2:
-            delete ();
+            pop();
             break;
         case 3:
             display();
@@ -86,7 +75,6 @@ int main()
         case 4:
             printf("Exiting program.\n");
             exit(0);
-            break;
         default:
             printf("Invalid choice. Please try again.\n");
         }

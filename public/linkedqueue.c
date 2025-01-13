@@ -3,51 +3,46 @@
 struct node
 {
     int data;
-    struct node *left;
-    struct node *right;
+    struct node *link;
 };
-struct node *head;
-void enqueue()
+struct node *front = 0;
+struct node *rear = 0;
+void enqueue(int x)
 {
     struct node *newnode;
-    struct node *temp;
     newnode = (struct node *)malloc(sizeof(struct node));
-    printf("Enter data");
-    scanf("%d", &newnode->data);
-    newnode->right = 0;
-    newnode->left = 0;
-    if (head == 0)
+    newnode->data = x;
+    newnode->link = 0;
+    if (front == 0 && rear == 0)
     {
-        head = temp = newnode;
+        front = rear = newnode;
     }
     else
     {
-        temp->right = newnode;
-        newnode->left = temp;
-        temp = newnode;
+        rear->link = newnode;
+        rear = newnode;
     }
 }
-void delete()
+void dequeue()
 {
     struct node *temp;
-    if (head == 0)
+    temp = front;
+    if (front == 0 && rear == 0)
     {
         printf("Empty");
     }
     else
     {
-        temp = head;
-        head = head->right;
-        head->left = 0;
         printf("popped element is %d", temp->data);
+        front = temp->link;
         free(temp);
     }
 }
 void display()
 {
     struct node *temp;
-    temp = head;
-    if (head == 0)
+    temp = front;
+    if (front == 0 && rear == 0)
     {
         printf("Empty");
     }
@@ -56,13 +51,14 @@ void display()
         while (temp != 0)
         {
             printf("%d", temp->data);
-            temp = temp->right;
+            temp = temp->link;
         }
     }
 }
 int main()
 {
     int choice;
+    int value;
     printf("\nMenu:\n");
     printf("1. Push\n");
     printf("2. Pop\n");
@@ -75,10 +71,12 @@ int main()
         switch (choice)
         {
         case 1:
-            enqueue();
+            printf("Enter the data to add\n");
+            scanf("%d", &value);
+            enqueue(value);
             break;
         case 2:
-            delete ();
+            dequeue();
             break;
         case 3:
             display();

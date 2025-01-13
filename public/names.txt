@@ -3,3 +3,5 @@ patternmatching.c      selectionsort.c            doublylinkedlist.c
 polynomialadd.c        stackimplementation.c      graph.c
 polynomials.c          transpose.c                heap.c
 postfixevaluation.c    infixtopostfix.c           queueimplementation.c
+fast.c                  end.c                     kmp.c
+stacklinked.c           linkedqueue.c           
